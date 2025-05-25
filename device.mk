@@ -53,6 +53,14 @@ PRODUCT_PACKAGES += \
     AntHalService-Soong \
     com.dsi.ant@1.0.vendor
 
+# ART
+PRODUCT_DEX_PREOPT_BOOT_FLAGS := --compiler-filter=speed
+PRODUCT_DEX_PREOPT_DEFAULT_COMPILER_FILTER := speed
+PRODUCT_DEX_PREOPT_DEFAULT_FLAGS := --compiler-filter=speed
+PRODUCT_OTHER_JAVA_DEBUG_INFO := false
+PRODUCT_SYSTEM_SERVER_COMPILER_FILTER := speed
+PRODUCT_SYSTEM_SERVER_DEBUG_INFO := false
+
 # Audio
 AUDIO_HAL_DIR := hardware/qcom-caf/sm8350/audio
 

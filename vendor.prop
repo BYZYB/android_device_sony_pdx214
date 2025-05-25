@@ -1,3 +1,24 @@
+# ART
+dalvik.vm.dex2oat-filter=speed
+dalvik.vm.dex2oat-minidebuginfo=false
+dalvik.vm.image-dex2oat-filter=speed
+dalvik.vm.minidebuginfo=false
+pm.dexopt.ab-ota=speed
+pm.dexopt.bg-dexopt=speed
+pm.dexopt.boot-after-mainline-update=speed
+pm.dexopt.boot-after-ota=speed
+pm.dexopt.cmdline=speed
+pm.dexopt.first-boot=speed
+pm.dexopt.inactive=speed
+pm.dexopt.install-bulk-downgraded=speed
+pm.dexopt.install-bulk-secondary-downgraded=speed
+pm.dexopt.install-bulk-secondary=speed
+pm.dexopt.install-bulk=speed
+pm.dexopt.install-fast=speed
+pm.dexopt.install=speed
+pm.dexopt.post-boot=speed
+pm.dexopt.shared=speed
+
 # Audio
 aaudio.hw_burst_min_usec=2000
 aaudio.mmap_exclusive_policy=2
