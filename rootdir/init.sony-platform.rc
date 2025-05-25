@@ -14,18 +14,7 @@ on init
     exec u:r:tad:s0 system -- /vendor/bin/wait4tad
 
 on early-init
-    exec u:r:vendor_modprobe:s0 -- /vendor/bin/modprobe -a -d /vendor/lib/modules/ \
-        et603-int \
-        last_logs \
-        powerkey_forcecrash \
-
-    
-
-    # Change reset behavior to warm reset
-    
-
-    # Enable power key force crash on userdebug variant
-    
+    exec u:r:vendor_modprobe:s0 -- /vendor/bin/modprobe -a -d /vendor/lib/modules/ et603-int last_logs powerkey_forcecrash
 
     # unmount temporary oem mount point
     umount /mnt/oem
@@ -71,7 +60,6 @@ on property:init.svc.vendor.charger=running
     chmod 0660 /sys/power/wake_unlock
 
     # charge_service
-    
     start charge_service
 
     # Set USB mode to MSC for SDP charging
@@ -126,8 +114,8 @@ on post-fs
     chown system system /sys/bus/platform/drivers/ufshcd-qcom/1d84000.ufshc/health_descriptor/life_time_estimation_b
 
 on post-fs-data
-   # MPEG-H 3D audio
-   mkdir /data/vendor/3dra 0775 audio audio
+    # MPEG-H 3D audio
+    mkdir /data/vendor/3dra 0775 audio audio
 
     # Charger
     chmod 0664 /sys/class/power_supply/battery/uevent
@@ -143,15 +131,9 @@ on post-fs-data
     # backlight
     chown system system /sys/class/backlight/panel0-backlight/brightness
 
-    # create directory for wfd
-    
-
     # Fingerprint EGIS
     mkdir /data/vendor/egis 0770 system system
     start ets_hal
-
-    # Camera to enable system crash from DSP
-    
 
 on boot
     # Charger
@@ -171,8 +153,8 @@ on boot
     chmod 0444 /sys/kernel/debug/battery_debug/votables/fcc_tot/status
 
     # charge_service
-    
     start charge_service
+
     # USB
     chown root system /config/usb_gadget/g1
 
@@ -211,11 +193,3 @@ on property:sys.boot_completed=1
 on property:sys.shutdown.requested=*
     write /sys/class/battchg_ext/bootup_shutdown_phase 4
     write /sys/class/power_supply/battery/uevent change
-
-# bugreport is triggered by holding down volume down, volume up and power
-service bugreport /system/bin/dumpstate -d -p -B -z \
-        -o /data/user_de/0/com.android.shell/files/bugreports/bugreport
-    class main
-    disabled
-    oneshot
-    keycodes 114 115 116

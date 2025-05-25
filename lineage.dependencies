@@ -4,7 +4,11 @@
     "target_path": "hardware/sony"
   },
   {
-    "repository": "android_kernel_sony_sm8350",
-    "target_path": "kernel/sony/sm8350"
+    "repository": "android_kernel_sony_pdx214",
+    "target_path": "kernel/sony/pdx214"
+  },
+  {
+    "repository": "android_vendor_sony_pdx214",
+    "target_path": "vendor/sony/pdx214",
   }
 ]

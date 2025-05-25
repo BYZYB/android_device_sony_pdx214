@@ -15,7 +15,7 @@ on boot
     chown system system /sys/devices/virtual/sec/tsp/cmd
     chmod 0600 /sys/devices/virtual/sec/tsp/cmd
 
-#Touch
+# Touch
 on property:vendor.backlight_on=1
     write /sys/devices/virtual/sec/tsp/cmd "touch_enable_irq,1"
 
