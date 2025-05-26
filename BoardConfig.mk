@@ -112,7 +112,7 @@ ODM_MANIFEST_SS_FILES := $(DEVICE_PATH)/manifest_ss.xml
 BOARD_BOOT_HEADER_VERSION := 3
 BOARD_DTB_OFFSET := 0x01f00000
 BOARD_KERNEL_BASE := 0x00000000
-BOARD_KERNEL_CMDLINE := androidboot.console=ttyMSM0 androidboot.hardware=qcom androidboot.memcg=1 androidboot.usbcontroller=a600000.dwc3 buildproduct=pdx214 cgroup.memory=nokmem,nosocket console=ttyMSM0,115200n8 ip6table_raw.raw_before_defrag=1 iptable_raw.raw_before_defrag=1 loop.max_part=7 loop.max_part=7 lpm_levels.sleep_disabled=1 msm_rtb.filter=0x237 pcie_ports=compat service_locator.enable=1 swiotlb=0 video=vfb:640x400,bpp=32,memsize=3072000
+BOARD_KERNEL_CMDLINE := androidboot.console=ttyMSM0 androidboot.hardware=qcom androidboot.memcg=1 androidboot.usbcontroller=a600000.dwc3 buildproduct=pdx214 cgroup.memory=nokmem,nosocket console=ttyMSM0,115200n8 ip6table_raw.raw_before_defrag=1 iptable_raw.raw_before_defrag=1 loop.max_part=7 loop.max_part=7 lpm_levels.sleep_disabled=1 msm_rtb.filter=0x237 pcie_ports=compat service_locator.enable=1 swiotlb=0 video=vfb:640x400,bpp=32,memsize=3072000 mitigations=off
 BOARD_KERNEL_IMAGE_NAME := Image
 BOARD_KERNEL_OFFSET := 0x00008000
 BOARD_KERNEL_PAGESIZE := 4096
