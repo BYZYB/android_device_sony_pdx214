@@ -21,9 +21,6 @@ DEVICE_PATH := device/sony/pdx214
 AB_OTA_PARTITIONS += boot dtbo product system system_ext vbmeta vbmeta_system odm vendor vendor_dlkm vendor_boot
 AB_OTA_UPDATER := true
 
-# ANT+
-BOARD_ANT_WIRELESS_DEVICE := "qualcomm-hidl"
-
 # Architecture
 TARGET_2ND_ARCH := arm
 TARGET_2ND_ARCH_VARIANT := armv8-a

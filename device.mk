@@ -48,10 +48,6 @@ PRODUCT_PACKAGES += \
     checkpoint_gc \
     otapreopt_script
 
-# ANT+
-PRODUCT_PACKAGES += \
-    AntHalService-Soong
-
 # ART
 PRODUCT_DEX_PREOPT_BOOT_FLAGS := --compiler-filter=speed
 PRODUCT_DEX_PREOPT_DEFAULT_COMPILER_FILTER := speed
