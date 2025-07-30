@@ -234,6 +234,8 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/media/media_codecs_performance_lahaina_vendor.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_performance_lahaina_vendor.xml \
     $(LOCAL_PATH)/media/media_codecs_performance_lahaina_vendor.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_performance_lahaina.xml
 
+$(call soong_config_set,stagefright,target_disable_thumbnail_block_model,true)
+
 # Net
 PRODUCT_PACKAGES += \
     netutils-wrapper-1.0
