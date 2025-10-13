@@ -1,20 +1,20 @@
 
 project bootable/recovery/
 diff --git a/install/install.cpp b/install/install.cpp
-index 68cf59e..fb98429 100644
+index cfbf681..101b362 100644
 --- a/install/install.cpp
 +++ b/install/install.cpp
-@@ -198,7 +198,7 @@ static bool CheckAbSpecificMetadata(const std::map<std::string, std::string>& me
+@@ -200,7 +200,7 @@ static bool CheckAbSpecificMetadata(const std::map<std::string, std::string>& me
    }
    const auto post_build = get_value(metadata, "post-build");
    const auto build_fingerprint = android::base::Tokenize(post_build, "/");
 -  if (!build_fingerprint.empty() && android::base::GetProperty("ro.build.type", "") == "user") {
-+  if (!build_fingerprint.empty() && false) {
++  if (false) {
      const auto& post_build_tag = build_fingerprint.back();
      const auto build_tag = android::base::GetProperty("ro.build.tags", "");
      if (build_tag != post_build_tag) {
 diff --git a/recovery.cpp b/recovery.cpp
-index f769154..f9eaf40 100644
+index 55576c2..c09a03a 100644
 --- a/recovery.cpp
 +++ b/recovery.cpp
 @@ -124,7 +124,7 @@ static bool save_current_log = false;
@@ -39,6 +39,15 @@ index f769154..f9eaf40 100644
  }
  
  bool ask_to_continue_downgrade(Device* device) {
+-  if (get_build_type() == "user") {
++  if (false) {
+     return false;
+   } else {
+     device->GetUI()->SetProgressType(RecoveryUI::EMPTY);
+@@ -197,7 +197,7 @@ bool ask_to_continue_downgrade(Device* device) {
+ }
+ 
+ bool ask_to_continue_spl_downgrade(Device* device) {
 -  if (get_build_type() == "user") {
 +  if (false) {
      return false;
@@ -69,7 +78,7 @@ index 91b2515..ba330bd 100644
 
 project build/make/
 diff --git a/target/product/base_system.mk b/target/product/base_system.mk
-index d4911b6..70faed2 100644
+index 4b79773..7c7790b 100644
 --- a/target/product/base_system.mk
 +++ b/target/product/base_system.mk
 @@ -31,9 +31,7 @@ PRODUCT_PACKAGES += \
@@ -101,7 +110,7 @@ index d4911b6..70faed2 100644
      device_config \
      dmctl \
      dnsmasq \
-@@ -111,7 +104,6 @@ PRODUCT_PACKAGES += \
+@@ -110,7 +103,6 @@ PRODUCT_PACKAGES += \
      group_system \
      gsid \
      gsi_tool \
@@ -109,7 +118,7 @@ index d4911b6..70faed2 100644
      heapprofd_client \
      gatekeeperd \
      gpuservice \
-@@ -287,9 +279,6 @@ PRODUCT_PACKAGES += \
+@@ -286,9 +278,6 @@ PRODUCT_PACKAGES += \
      tc \
      telecom \
      telephony-common \
@@ -131,16 +140,15 @@ index d4911b6..70faed2 100644
  PRODUCT_PACKAGES += \
      libEGL_angle \
      libGLESv1_CM_angle \
-@@ -492,8 +476,6 @@ PRODUCT_PACKAGES += etc_hosts
- PRODUCT_PACKAGES += init.zygote32.rc
+@@ -493,7 +477,6 @@ PRODUCT_PACKAGES += init.zygote32.rc
  PRODUCT_VENDOR_PROPERTIES += ro.zygote?=zygote32
  
--PRODUCT_SYSTEM_PROPERTIES += debug.atrace.tags.enableflags=0
+ PRODUCT_SYSTEM_PROPERTIES += debug.atrace.tags.enableflags=0
 -PRODUCT_SYSTEM_PROPERTIES += persist.traced.enable=1
  PRODUCT_SYSTEM_PROPERTIES += ro.surface_flinger.game_default_frame_rate_override=60
  
  # Include kernel configs.
-@@ -546,11 +528,6 @@ endif
+@@ -547,11 +530,6 @@ endif
  PRODUCT_SYSTEM_SERVER_APPS += \
      SettingsProvider \
  
@@ -165,7 +173,7 @@ index 7aa7903..5f5aad1 100644
  
  # Net:
 diff --git a/target/product/handheld_system.mk b/target/product/handheld_system.mk
-index 2f8cd4c..49eb313 100644
+index 2f8cd4c..6518c71 100644
 --- a/target/product/handheld_system.mk
 +++ b/target/product/handheld_system.mk
 @@ -34,10 +34,8 @@ $(call inherit-product-if-exists, frameworks/webview/chromium/chromium.mk)
@@ -179,15 +187,7 @@ index 2f8cd4c..49eb313 100644
      BuiltInPrintService \
      CalendarProvider \
      cameraserver \
-@@ -49,7 +47,6 @@ PRODUCT_PACKAGES += \
-     DeviceDiagnostics \
-     DocumentsUI \
-     DownloadProviderUi \
--    EasterEgg \
-     ExternalStorageProvider \
-     FusedLocation \
-     InputDevices \
-@@ -58,7 +55,6 @@ PRODUCT_PACKAGES += \
+@@ -58,7 +56,6 @@ PRODUCT_PACKAGES += \
      ManagedProvisioning \
      MmsService \
      MtpService \
@@ -195,7 +195,7 @@ index 2f8cd4c..49eb313 100644
      PacProcessor \
      preinstalled-packages-platform-handheld-system.xml \
      PrintRecommendationService \
-@@ -66,8 +62,6 @@ PRODUCT_PACKAGES += \
+@@ -66,8 +63,6 @@ PRODUCT_PACKAGES += \
      ProxyHandler \
      screenrecord \
      SecureElement \
@@ -205,66 +205,26 @@ index 2f8cd4c..49eb313 100644
      TeleService \
      UserDictionaryProvider \
 diff --git a/target/product/handheld_system_ext.mk b/target/product/handheld_system_ext.mk
-index 187b627..5d5f758 100644
+index 6d686c5..5d7bc50 100644
 --- a/target/product/handheld_system_ext.mk
 +++ b/target/product/handheld_system_ext.mk
-@@ -28,4 +28,3 @@ PRODUCT_PACKAGES += \
+@@ -29,4 +29,3 @@ PRODUCT_PACKAGES += \
      Settings \
      StorageManager \
      SystemUI \
 -    WallpaperCropper \
-diff --git a/target/product/media_system.mk b/target/product/media_system.mk
-index 0733d06..9448cbf 100644
---- a/target/product/media_system.mk
-+++ b/target/product/media_system.mk
-@@ -64,10 +64,6 @@ PRODUCT_VENDOR_PROPERTIES += \
-     tombstoned.max_tombstone_count?=50
- endif
- 
--PRODUCT_VENDOR_PROPERTIES += \
--    ro.logd.size.stats=64K \
--    log.tag.stats_log=I
--
- # Enable CFI for security-sensitive components
- $(call inherit-product, $(SRC_TARGET_DIR)/product/cfi-common.mk)
- $(call inherit-product-if-exists, vendor/google/products/cfi-vendor.mk)
 diff --git a/target/product/telephony_system.mk b/target/product/telephony_system.mk
-index ef48719..4b76ad5 100644
+index ef48719..86ee820 100644
 --- a/target/product/telephony_system.mk
 +++ b/target/product/telephony_system.mk
-@@ -20,8 +20,5 @@
+@@ -20,7 +20,6 @@
  PRODUCT_PACKAGES := \
      ONS \
      CarrierDefaultApp \
 -    CallLogBackup \
--    com.android.cellbroadcast \
--    CellBroadcastLegacyApp \
+     com.android.cellbroadcast \
+     CellBroadcastLegacyApp \
  
- PRODUCT_COPY_FILES := \
-
-project device/qcom/sepolicy_vndr/legacy-um/
-diff --git a/SEPolicy.mk b/SEPolicy.mk
-index 707b334..58303b0 100755
---- a/SEPolicy.mk
-+++ b/SEPolicy.mk
-@@ -57,7 +57,7 @@ ifeq (,$(filter sdm845 sdm710, $(TARGET_BOARD_PLATFORM)))
-       endif
-     endif
- 
--    ifneq (,$(filter userdebug eng, $(TARGET_BUILD_VARIANT)))
-+    ifneq (,$(filter user userdebug eng, $(TARGET_BUILD_VARIANT)))
-       BOARD_VENDOR_SEPOLICY_DIRS += $(SEPOLICY_PATH)/generic/vendor/test
-       BOARD_VENDOR_SEPOLICY_DIRS += $(SEPOLICY_PATH)/qva/vendor/test
-       BOARD_VENDOR_SEPOLICY_DIRS += $(SEPOLICY_PATH)/qva/vendor/test/sysmonapp
-@@ -83,7 +83,7 @@ ifneq (,$(filter sdm845 sdm710, $(TARGET_BOARD_PLATFORM)))
-     else
-       BOARD_VENDOR_SEPOLICY_DIRS += $(SEPOLICY_PATH)/legacy/vendor/$(TARGET_SEPOLICY_DIR)
-     endif
--    ifneq (,$(filter userdebug eng, $(TARGET_BUILD_VARIANT)))
-+    ifneq (,$(filter user userdebug eng, $(TARGET_BUILD_VARIANT)))
-       ifneq ($(PRODUCT_SET_DEBUGFS_RESTRICTIONS),true)
-         BOARD_VENDOR_SEPOLICY_DIRS += $(SEPOLICY_PATH)/legacy/vendor/common/debugfs
-         BOARD_VENDOR_SEPOLICY_DIRS += $(SEPOLICY_PATH)/legacy/vendor/test/debugfs
 
 project frameworks/base/
 diff --git a/packages/overlays/Android.bp b/packages/overlays/Android.bp
@@ -299,7 +259,7 @@ index 75b0fc24b..81a40f607 100644
                  throw new IOException("Can't mkdir: " + mDropBoxDir);
              }
 diff --git a/services/core/java/com/android/server/pm/ComputerEngine.java b/services/core/java/com/android/server/pm/ComputerEngine.java
-index 6f5813065..3ac4ac7b7 100644
+index 7117beecf..7e9bc75fc 100644
 --- a/services/core/java/com/android/server/pm/ComputerEngine.java
 +++ b/services/core/java/com/android/server/pm/ComputerEngine.java
 @@ -1493,10 +1493,6 @@ public class ComputerEngine implements Computer {
@@ -316,10 +276,10 @@ index 6f5813065..3ac4ac7b7 100644
 
 project kernel/configs/
 diff --git a/r/android-5.4/android-base-conditional.xml b/r/android-5.4/android-base-conditional.xml
-index d54f670..04ddfa5 100644
+index 8725cd3..e66d630 100644
 --- a/r/android-5.4/android-base-conditional.xml
 +++ b/r/android-5.4/android-base-conditional.xml
-@@ -51,10 +51,6 @@
+@@ -47,10 +47,6 @@
  		<key>CONFIG_COMPAT</key>
  		<value type="bool">y</value>
  	</config>
@@ -330,7 +290,7 @@ index d54f670..04ddfa5 100644
  	<config>
  		<key>CONFIG_CP15_BARRIER_EMULATION</key>
  		<value type="bool">y</value>
-@@ -63,10 +59,6 @@
+@@ -59,10 +55,6 @@
  		<key>CONFIG_SETEND_EMULATION</key>
  		<value type="bool">y</value>
  	</config>
@@ -371,10 +331,10 @@ index 15c784c..e4c90ed 100644
  CONFIG_STATIC_USERMODEHELPER=y
  CONFIG_STRICT_KERNEL_RWX=y
 diff --git a/s/android-5.4/android-base-conditional.xml b/s/android-5.4/android-base-conditional.xml
-index 1e62abd..2a9e4b4 100644
+index 560c42f..8d0edc8 100644
 --- a/s/android-5.4/android-base-conditional.xml
 +++ b/s/android-5.4/android-base-conditional.xml
-@@ -47,10 +47,6 @@
+@@ -43,10 +43,6 @@
  		<key>CONFIG_ARMV8_DEPRECATED</key>
  		<value type="bool">y</value>
  	</config>
@@ -385,7 +345,7 @@ index 1e62abd..2a9e4b4 100644
  	<config>
  		<key>CONFIG_COMPAT</key>
  		<value type="bool">y</value>
-@@ -63,10 +59,6 @@
+@@ -59,10 +55,6 @@
  		<key>CONFIG_SETEND_EMULATION</key>
  		<value type="bool">y</value>
  	</config>
@@ -428,14 +388,14 @@ index d6e1f5a..85080cc 100644
 
 project packages/modules/adb/
 diff --git a/daemon/main.cpp b/daemon/main.cpp
-index 0d8c821..f716759 100644
+index 13b5d8c..1cfea80 100644
 --- a/daemon/main.cpp
 +++ b/daemon/main.cpp
 @@ -75,7 +75,7 @@ static bool should_drop_privileges() {
      // ro.secure:
      //   Drop privileges by default. Set to 1 on userdebug and user builds.
      bool ro_secure = android::base::GetBoolProperty("ro.secure", true);
--    bool ro_debuggable = __android_log_is_debuggable();
+-    bool ro_debuggable = ANDROID_DEBUGGABLE || __android_log_is_debuggable();
 +    bool ro_debuggable = true;
  
      // Drop privileges if ro.secure is set...
@@ -444,33 +404,34 @@ index 0d8c821..f716759 100644
  
      // Don't run as root if running in secure mode.
      if (should_drop_privileges()) {
--        const bool should_drop_caps = !__android_log_is_debuggable();
+-        const bool should_drop_caps = !ANDROID_DEBUGGABLE && !__android_log_is_debuggable();
 +        const bool should_drop_caps = false;
  
          if (should_drop_caps) {
              // CAP_SETUI and CAP_SETGID are required for change_uid and change_gid calls below.
 diff --git a/root/adbroot_service.cpp b/root/adbroot_service.cpp
-index ff30f4b..243f18e 100644
+index 9e135d4..243f18e 100644
 --- a/root/adbroot_service.cpp
 +++ b/root/adbroot_service.cpp
 @@ -106,7 +106,7 @@ ndk::ScopedAStatus ADBRootService::isSupported(bool* _aidl_return) {
      }
  
      AutoMutex _l(lock_);
--    *_aidl_return = __android_log_is_debuggable();
+-    *_aidl_return = ANDROID_DEBUGGABLE || __android_log_is_debuggable();
 +    *_aidl_return = true;
      return ndk::ScopedAStatus::ok();
  }
  
 diff --git a/sockets.cpp b/sockets.cpp
-index f766f7e..1dd0dca 100644
+index a90285f..1423f16 100644
 --- a/sockets.cpp
 +++ b/sockets.cpp
-@@ -473,7 +473,7 @@ asocket* create_local_service_socket(std::string_view name, atransport* transpor
-     LOG(VERBOSE) << "LS(" << s->id << "): bound to '" << name << "' via " << fd_value;
+@@ -473,8 +473,7 @@ asocket* create_local_service_socket(std::string_view name, atransport* transpor
+     VLOG(SERVICES) << "LS(" << s->id << "): bound to '" << name << "' via " << fd_value;
  
  #if !ADB_HOST
--    if ((name.starts_with("root:") && getuid() != 0 && __android_log_is_debuggable()) ||
+-    if ((name.starts_with("root:") && getuid() != 0 &&
+-         (ANDROID_DEBUGGABLE || __android_log_is_debuggable())) ||
 +    if ((name.starts_with("root:") && getuid() != 0) ||
          (name.starts_with("unroot:") && getuid() == 0) || name.starts_with("usb:") ||
          name.starts_with("tcpip:")) {
@@ -478,10 +439,10 @@ index f766f7e..1dd0dca 100644
 
 project system/core/
 diff --git a/rootdir/init.rc b/rootdir/init.rc
-index 0cc1297..8406612 100644
+index cf198cb..e1b3210 100644
 --- a/rootdir/init.rc
 +++ b/rootdir/init.rc
-@@ -333,7 +333,6 @@ on init
+@@ -331,7 +331,6 @@ on init
      write /proc/sys/kernel/sched_wakeup_granularity_ns 2000000
      write /proc/sys/kernel/sched_child_runs_first 0
  
@@ -489,7 +450,7 @@ index 0cc1297..8406612 100644
      write /proc/sys/vm/mmap_min_addr 32768
      write /proc/sys/net/ipv4/ping_group_range "0 2147483647"
      write /proc/sys/net/unix/max_dgram_qlen 2400
-@@ -707,24 +706,12 @@ on post-fs-data
+@@ -705,24 +704,12 @@ on post-fs-data
      # Make sure we have the device encryption key.
      installkey /data
  
@@ -514,7 +475,7 @@ index 0cc1297..8406612 100644
      # Make sure that apexd is started in the default namespace
      enter_default_mount_ns
  
-@@ -804,9 +791,7 @@ on post-fs-data
+@@ -801,9 +788,7 @@ on post-fs-data
      chmod 0660 /data/misc/bluedroid/bt_config.conf
      chown bluetooth bluetooth /data/misc/bluedroid/bt_config.conf
      mkdir /data/misc/bluetooth 0770 bluetooth bluetooth
@@ -524,13 +485,14 @@ index 0cc1297..8406612 100644
      mkdir /data/misc/credstore 0700 credstore credstore
      mkdir /data/misc/gatekeeper 0700 system system
      mkdir /data/misc/keychain 0771 system system
-@@ -837,14 +822,7 @@ on post-fs-data
+@@ -834,15 +819,7 @@ on post-fs-data
      mkdir /data/misc/audioserver 0700 audioserver audioserver
      mkdir /data/misc/cameraserver 0700 cameraserver cameraserver
      mkdir /data/misc/vold 0700 root root
 -    mkdir /data/misc/boottrace 0771 system shell
      mkdir /data/misc/update_engine 0700 root root
--    mkdir /data/misc/update_engine_log 02750 root log
+-    mkdir /data/misc/update_engine_log 02750 root update_engine_log
+-    chown root update_engine_log /data/misc/update_engine_log
 -    mkdir /data/misc/trace 0700 root root
 -    # create location to store surface and window trace files
 -    mkdir /data/misc/wmtrace 0700 system system
@@ -539,7 +501,7 @@ index 0cc1297..8406612 100644
      # profile file layout
      mkdir /data/misc/profiles 0771 system system
      mkdir /data/misc/profiles/cur 0771 system system
-@@ -856,7 +834,6 @@ on post-fs-data
+@@ -854,7 +831,6 @@ on post-fs-data
      mkdir /data/misc/apexrollback 0700 root root
      mkdir /data/misc/appcompat/ 0700 system system
      mkdir /data/misc/uprobestats-configs/ 0777 uprobestats uprobestats
@@ -547,7 +509,7 @@ index 0cc1297..8406612 100644
      # create location to store pre-reboot information
      mkdir /data/misc/prereboot 0700 system system
      # directory used for on-device refresh metrics file.
-@@ -881,7 +858,6 @@ on post-fs-data
+@@ -879,7 +855,6 @@ on post-fs-data
      # For security reasons, /data/local/tmp should always be empty.
      # Do not place files or directories in /data/local/tmp
      mkdir /data/local/tmp 0771 shell shell
@@ -555,7 +517,7 @@ index 0cc1297..8406612 100644
      mkdir /data/app-private 0771 system system encryption=Require
      mkdir /data/app-ephemeral 0771 system system encryption=Require
      mkdir /data/app-asec 0700 root root encryption=Require
-@@ -896,17 +872,6 @@ on post-fs-data
+@@ -894,17 +869,6 @@ on post-fs-data
      mkdir /data/fonts/files 0771 system system
      mkdir /data/fonts/config 0770 system system
  
@@ -573,7 +535,7 @@ index 0cc1297..8406612 100644
      # create dalvik-cache, so as to enforce our permissions
      mkdir /data/dalvik-cache 0771 root root encryption=Require
      # create the A/B OTA directory, so as to enforce our permissions
-@@ -948,13 +913,7 @@ on post-fs-data
+@@ -946,13 +910,7 @@ on post-fs-data
      mkdir /data/system/environ 0700 system system
      # b/183861600 attempt to fix selinux label before running derive_classpath service
      restorecon /data/system/environ
@@ -582,12 +544,12 @@ index 0cc1297..8406612 100644
      mkdir /data/system/users 0775 system system
 -    # Mkdir and set SELinux security contexts for shutdown-checkpoints.
 -    # TODO(b/270286197): remove these after couple releases.
--    mkdir /data/system/shutdown-checkpoints 0700 system system
+-    mkdir /data/system/shutdown-checkpoints 0755 system system
 -    restorecon_recursive /data/system/shutdown-checkpoints
  
      # Create the parent directories of the user CE and DE storage directories.
      # These parent directories must use encryption=None, since each of their
-@@ -1273,7 +1232,6 @@ on charger
+@@ -1274,7 +1232,6 @@ on charger
      class_start charger
  
  on property:sys.boot_completed=1
@@ -595,7 +557,7 @@ index 0cc1297..8406612 100644
      # Setup per_boot directory so other .rc could start to use it on boot_completed
      exec - system system -- /bin/rm -rf /data/per_boot
      mkdir /data/per_boot 0700 system system encryption=Require key=per_boot_ref
-@@ -1352,17 +1310,6 @@ service console /system/bin/sh
+@@ -1353,17 +1310,6 @@ service console /system/bin/sh
      setenv HOSTNAME console
      shutdown critical
  
@@ -629,7 +591,7 @@ index 9615d12..0927e5d 100644
  
  func (m *macPermissionsModule) GenerateAndroidBuildActions(ctx android.ModuleContext) {
 diff --git a/build/soong/policy.go b/build/soong/policy.go
-index 8bdf01b..ec35dfb 100644
+index 7e60832..886b5b0 100644
 --- a/build/soong/policy.go
 +++ b/build/soong/policy.go
 @@ -157,7 +157,7 @@ func (c *policyConf) buildVariant(ctx android.ModuleContext) string {
@@ -641,7 +603,7 @@ index 8bdf01b..ec35dfb 100644
  }
  
  func (c *policyConf) cts() bool {
-@@ -414,7 +414,7 @@ func (c *policyCil) compileConfToCil(ctx android.ModuleContext, conf android.Pat
+@@ -401,7 +401,7 @@ func (c *policyCil) compileConfToCil(ctx android.ModuleContext, conf android.Pat
  			FlagWithArg("-o ", os.DevNull).
  			FlagWithArg("-f ", os.DevNull)
  
@@ -650,7 +612,7 @@ index 8bdf01b..ec35dfb 100644
  			secilcCmd.Flag("-N")
  		}
  	}
-@@ -525,13 +525,13 @@ func (c *policyBinary) GenerateAndroidBuildActions(ctx android.ModuleContext) {
+@@ -513,13 +513,13 @@ func (c *policyBinary) GenerateAndroidBuildActions(ctx android.ModuleContext) {
  		FlagWithOutput("-o ", bin).
  		FlagWithArg("-f ", os.DevNull)
  
@@ -682,7 +644,7 @@ index c2a21dd..832acc1 100644
 
 project vendor/lineage/
 diff --git a/config/common.mk b/config/common.mk
-index 5265427..0f09cbf 100644
+index abc2b9e..d25e86b 100644
 --- a/config/common.mk
 +++ b/config/common.mk
 @@ -122,9 +122,6 @@ endif
@@ -695,7 +657,7 @@ index 5265427..0f09cbf 100644
  
  # Lineage packages
  ifeq ($(PRODUCT_IS_ATV),)
-@@ -153,13 +150,9 @@ PRODUCT_PACKAGES += \
+@@ -153,16 +150,9 @@ PRODUCT_PACKAGES += \
  
  # Extra tools in Lineage
  PRODUCT_PACKAGES += \
@@ -706,10 +668,13 @@ index 5265427..0f09cbf 100644
 -    nano \
      setcap \
 -    vim
+-
+-PRODUCT_PACKAGES += \
+-    nano_recovery
  
- PRODUCT_PACKAGES += \
-     nano_recovery
-@@ -186,19 +179,6 @@ PRODUCT_ARTIFACT_PATH_REQUIREMENT_ALLOWED_LIST += \
+ PRODUCT_ARTIFACT_PATH_REQUIREMENT_ALLOWED_LIST += \
+     system/bin/curl \
+@@ -186,19 +176,6 @@ PRODUCT_ARTIFACT_PATH_REQUIREMENT_ALLOWED_LIST += \
  PRODUCT_COPY_FILES += \
      vendor/lineage/prebuilt/common/bin/wipe-frp.sh:$(TARGET_COPY_OUT_RECOVERY)/root/system/bin/wipe-frp
  
@@ -730,7 +695,7 @@ index 5265427..0f09cbf 100644
  PRODUCT_PACKAGES += \
      rsync
 diff --git a/config/common_mobile.mk b/config/common_mobile.mk
-index 08619d9..ec3b164 100644
+index 758a5b4..8981743 100644
 --- a/config/common_mobile.mk
 +++ b/config/common_mobile.mk
 @@ -47,40 +47,6 @@ PRODUCT_PACKAGES += \
