@@ -415,6 +415,8 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     android.hardware.vibrator-sony.service.cs40l25
 
+$(call soong_config_set_bool,SonyVibratorVars,use_compound_double_click_effect,true)
+
 # VNDK
 BOARD_SHIPPING_API_LEVEL := 30
 PRODUCT_SHIPPING_API_LEVEL := $(BOARD_SHIPPING_API_LEVEL)
